@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LevelActivity"
+    android:background="@drawable/background_gradients"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/text_view_welcome_level_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_player"
+            android:textSize="24sp"
+            android:gravity="center_horizontal"
+            android:textColor="#fff"/>
+
+        <TextView
+            android:id="@+id/text_view_age_level_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/age_player"
+            android:textSize="24sp"
+            android:gravity="center_horizontal"
+            android:textColor="#fff"/>
+
+        <TextView
+            android:id="@+id/text_view_birthday_note_level_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/birthday_note"
+            android:textSize="24sp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:textColor="#fff"
+            android:drawableLeft="@drawable/birthday_icon"
+            android:drawableRight="@drawable/birthday_icon"
+            android:padding="20dp"
+            android:background="@drawable/birthday_note_background"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_level"
+        android:textColor="#fff"
+        android:textSize="24dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/button_easy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/easy_level"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:clickable="true"/>
+
+        <Button
+            android:id="@+id/button_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medium_level"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:clickable="true"/>
+
+        <Button
+            android:id="@+id/button_hard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hard_level"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:clickable="true"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Emoji Memory Game</string>
+    <string name="player_name">Player Name</string>
+    <string name="player_age">Player Age</string>
+    <string name="button_enter">Enter</string>
+    <string name="min_date">01/01/1970</string>
+    <string name="easy_level">Easy</string>
+    <string name="medium_level">Medium</string>
+    <string name="hard_level">Hard</string>
+    <string name="select_level">Select Your Level</string>
+    <string name="welcome_player">Welcome Player</string>
+    <string name="age_player">Your age is: 0</string>
+    <string name="birthday_note">It\'s Your Birthday\nHappy Birthday!!!</string>
+    <string name="time">Time left: </string>
+    <string name="timer">0</string>
+</resources>
