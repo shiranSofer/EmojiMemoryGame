@@ -9,29 +9,42 @@
     android:background="@drawable/background_gradients">
 
     <ScrollView
+        android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
+
+            android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_container"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:clickable="true">
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/image_view_main_screen"
                 android:layout_width="240dp"
                 android:layout_height="120dp"
-                android:layout_gravity="center_horizontal"
-                android:padding="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_below="@+id/fragment_container"
+                android:layout_centerInParent="true"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/welcome"/>
+                android:layout_marginTop="20dp"
+                android:padding="16dp"
+                android:src="@drawable/welcome" />
 
             <EditText
                 android:id="@+id/edit_text_player_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_below="@+id/image_view_main_screen"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@drawable/icon_emoji_white"
                 android:drawablePadding="12dp"
@@ -41,44 +54,48 @@
                 android:maxLines="1"
                 android:padding="8dp"
                 android:textColorHint="#fff"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#f9d7db" />
+                android:background="#f9d7db"
+                android:layout_below="@id/edit_text_player_name"/>
 
 
             <Button
                 android:id="@+id/button_player_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:drawablePadding="12dp"
-                android:padding="8dp"
-                android:hint="@string/player_age"
-                android:textColorHint="#fff"
-                android:maxLines="1"
+                android:layout_below="@id/edit_text_player_name"
+                android:layout_marginTop="2dp"
                 android:background="@android:color/transparent"
-                android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/icon_emoji_white"
                 android:clickable="true"
-                android:textSize="18sp"
-                android:gravity="left"/>
+                android:drawableLeft="@drawable/icon_emoji_white"
+                android:drawablePadding="12dp"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="@string/player_age"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColorHint="#fff"
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#f9d7db"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:background="#f9d7db"
+                android:layout_below="@id/button_player_age"/>
 
 
             <Button
                 android:id="@+id/button_enter_main_screen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_below="@id/button_player_age"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_background"
                 android:clickable="true"
                 android:padding="16dp"
@@ -87,6 +104,34 @@
                 android:textColor="#fff"
                 android:textSize="18sp" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/button_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_enter_main_screen"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/button_background"
+                android:clickable="true"
+                android:padding="16dp"
+                android:text="MAP"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/button_record_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_below="@id/button_map"
+                android:background="@drawable/button_background"
+                android:clickable="true"
+                android:padding="16dp"
+                android:text="@string/button_records_table"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
     </ScrollView>
 </LinearLayout>

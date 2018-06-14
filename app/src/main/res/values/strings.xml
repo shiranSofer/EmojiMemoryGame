@@ -13,4 +13,14 @@
     <string name="birthday_note">It\'s Your Birthday\nHappy Birthday!!!</string>
     <string name="time">Time left: </string>
     <string name="timer">0</string>
+    <string name="score_place_title">Place</string>
+    <string name="score_name_title">Name</string>
+    <string name="score_location_title">Location</string>
+    <string name="score_time_title">Time</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="button_records_table">Records</string>
+    <string name="button_pressed">pressedButton</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

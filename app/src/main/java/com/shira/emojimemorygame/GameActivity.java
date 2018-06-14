@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,28 +43,38 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int lastIndex = -1;
     private int foundPairs = 0;
     private int numOfCrads;
+    private DatabaseHalper db;
+    private int time;
+    private long endTime;
+    private long timeLeft;
+    private String playerName;
+    private int playerLevel;
+
+    private ImageView[] cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        db = new DatabaseHalper(GameActivity.this);
         Intent intent = getIntent();
         bundle = intent.getExtras();
-        int level = (int) bundle.get("level");
-        int time;
+        playerLevel = (int) bundle.get("level");
+        playerName = bundle.getString("player_name");
 
-        ((TextView)findViewById(R.id.text_view_player)).setText(bundle.getString("player_name"));
+        ((TextView)findViewById(R.id.text_view_player)).setText(playerName);
         handler = new Handler();
         timerTextField = (TextView) this.findViewById(R.id.text_view_timer);
 
-        time = settingsByLevel(level);
+        time = settingsByLevel(playerLevel);
 
         timerThread = new CountDownTimer(time, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
                 timerTextField.setText("Time Left: " + millisUntilFinished / 1000);
+                timeLeft = millisUntilFinished / 1000;
             }
 
             @Override
@@ -70,6 +83,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(GameActivity.this, "Your Time Is Up!", Toast.LENGTH_LONG).show();
                 timerThread.cancel();
                 timerTextField.setText("You Lost!");
+                
                 quit();
             }
         }.start();
@@ -212,10 +226,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void win() {
 
-        ((LinearLayout) this.findViewById(R.id.outcome_layout)).setVisibility(View.VISIBLE);
+        this.findViewById(R.id.outcome_layout).setVisibility(View.VISIBLE);
+        endTime = (time / 1000) - timeLeft;
         timerThread.cancel();
         timerTextField.setText("Well Done!");
+        winAnimation();
+        db.insertData(playerName, (int)endTime, "hadera", playerLevel);
         quit();
+
+        //wait 2 sec before moving to main activity
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                mainMenu();
+            }
+        }, 2000);
 
     }
 
@@ -234,6 +259,28 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             numOfCrads = 20;
         }
         return time;
+    }
+
+    public void winAnimation(){
+        cardView = new ImageView[numOfCrads];
+        for(int i = 0; i < numOfCrads; i++){
+            cardView[i] = findViewById(cardsId[i]);
+            Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
+            anim.setDuration(1000);
+            cardView[i].startAnimation(anim);
+        }
+
+    }
+
+    public  void loseAnimation(){
+
+    }
+
+
+    private void mainMenu() {
+        Intent it = new Intent(this, MainActivity.class);
+        startActivity(it);
+        finish();
     }
 }
 
