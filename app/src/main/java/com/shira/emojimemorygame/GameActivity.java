@@ -53,6 +53,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView[] cardView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -304,9 +305,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Drawable crying = getResources().getDrawable(R.drawable.crying_face);
         findViewById(R.id.cardrow_container).setBackground(crying);
     }
-
-
-
 
     private void mainMenu() {
         Intent it = new Intent(this, MainActivity.class);
