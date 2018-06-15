@@ -20,6 +20,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="button_records_table">Records</string>
     <string name="button_pressed">pressedButton</string>
+    <string name="google_maps_api_key">AIzaSyDITY6j0ltYOs3ZZm5fabsDcX-x4ZtLELY</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

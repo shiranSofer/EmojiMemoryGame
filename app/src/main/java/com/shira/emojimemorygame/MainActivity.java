@@ -1,15 +1,14 @@
 package com.shira.emojimemorygame;
 
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -34,19 +33,22 @@ public class MainActivity extends AppCompatActivity {
     private int gameLevel;
     private DatePickerDialog.OnDateSetListener datePicker;
     private Calendar myCalendar;
+    private MapsFragment map;
 
     private RecordsFragment table;
     private RadioButton radioButton;
     private SharedPreferences sharedPreferences;
     private RadioGroup radioGroup;
 
-    private DatabaseHalper dataBase;
+    private DatabaseHelper dataBase;
     private static HashSet<Record> easyRecordsSet;
     private static HashSet<Record> mediumRecordsSet;
     private static HashSet<Record> hardRecordsSet;
     private static ArrayList<Record> easyRecords;
     private static ArrayList<Record> mediumRecords;
     private static ArrayList<Record> hardRecords;
+
+    private ArrayList<Record> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_map).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mapIntent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(mapIntent);
+                Intent intent = new Intent(MainActivity.this, MapsFragment.class);
+                startActivity(intent);
             }
         });
 
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createDataBase(){
-        dataBase = new DatabaseHalper(this);
+        dataBase = new DatabaseHelper(this);
     }
 
     public void storeRecords(){
@@ -140,6 +142,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    public  ArrayList<Record> viewRecords(){
+        Cursor result = dataBase.getAllData();
+        if(result.getCount() == 0){
+            showMessage("Error", "no records");
+            return null;
+        }
+        arrayList = new ArrayList<>();
+        while (result.moveToNext()){
+            arrayList.add(new Record(result.getString(1),
+                    result.getInt(2), result.getString(3),
+                            result.getInt(4)));
+        }
+        return arrayList;
+    }
+
+
     private void startGame(){
         findViewById(R.id.button_enter_main_screen).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,47 +188,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-   /* private void startRadioButtons() {
-        int i = sharedPreferences.getInt(getString(R.string.button_pressed), 0); // saving in i the last selected difficulty
-        if (i == EASY) { // compare i to each difficulty to find its value and bring the right radio button
-            radioButton = (RadioButton) findViewById(R.id.table_radio_button_easy);
-            gameLevel = EASY;
-        } else if (MEDIUM == i) {
-            radioButton = (RadioButton) findViewById(R.id.table_radio_button_medium);
-            gameLevel = MEDIUM;
-        } else {
-            radioButton = (RadioButton) findViewById(R.id.table_radio_button_hard);
-            gameLevel = HARD;
-        }
-        radioButton.setChecked(true); // check the radio button last picked by the user
-        *//*radioGroup = (RadioGroup) findViewById(R.id.rg_level); //we are making a new radio group
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) { // we are listening to the radio group on changing radio bottons
-                radioButton = (RadioButton) group.findViewById(checkedId);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                switch (radioButton.getId()) {
-                    case R.id.table_radio_button_easy:
-                        editor.putInt(getString(R.string.button_pressed), EASY);
-                        gameLevel = EASY;
-                        break;
-
-                    case R.id.table_radio_button_medium:
-                        editor.putInt(getString(R.string.button_pressed), MEDIUM);
-                        gameLevel = MEDIUM;
-                        break;
-
-                    case R.id.table_radio_button_hard:
-                        editor.putInt(getString(R.string.button_pressed), HARD);
-                        gameLevel = HARD;
-                        break;
-                }
-                editor.apply();
-            }
-        });*//*
-    }*/
+    private void showMessage(String title, String Message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
+    }
 
     public static ArrayList<Record> getEasyRecords() {
         return easyRecords;

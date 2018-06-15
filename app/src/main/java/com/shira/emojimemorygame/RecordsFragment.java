@@ -69,7 +69,7 @@ public class RecordsFragment extends DialogFragment {
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_records, container, false);
         tableLayout = fragmentView.findViewById(R.id.table_scores);
-
+        //tableLayout.setVisibility(View.VISIBLE);
         button = fragmentView.findViewById(R.id.button_exit);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +124,7 @@ public class RecordsFragment extends DialogFragment {
                         break;
                 }
                 tableLayout.removeAllViewsInLayout();
+                mainActivity.viewRecords();
                 initTable();
             }
         });
@@ -152,7 +153,9 @@ public class RecordsFragment extends DialogFragment {
 
     private void initTable() {
         int placementCounter = 0;
-        ArrayList<Record> records = getRecordsByDifficulty();
+        ArrayList<Record> records = new ArrayList();
+        //records.add(new Record("x", 10, "y", 1));
+        //records.add(new Record("xx", 100, "y", 1));
         // add rows in table - if exist in data base
         for (i = 0; i < records.size(); i++) {
             Record record = records.get(i);

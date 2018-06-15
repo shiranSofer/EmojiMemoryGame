@@ -1,16 +1,17 @@
 package com.shira.emojimemorygame;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int lastIndex = -1;
     private int foundPairs = 0;
     private int numOfCrads;
-    private DatabaseHalper db;
+    private DatabaseHelper db;
     private int time;
     private long endTime;
     private long timeLeft;
@@ -57,7 +58,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        db = new DatabaseHalper(GameActivity.this);
+        db = new DatabaseHelper(GameActivity.this);
         Intent intent = getIntent();
         bundle = intent.getExtras();
         playerLevel = (int) bundle.get("level");
@@ -79,12 +80,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFinish() {
-
                 Toast.makeText(GameActivity.this, "Your Time Is Up!", Toast.LENGTH_LONG).show();
                 timerThread.cancel();
                 timerTextField.setText("You Lost!");
-                
                 quit();
+                loseAnimation();
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        mainMenu();
+                    }
+                }, 2000);
             }
         }.start();
 
@@ -273,8 +280,32 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public  void loseAnimation(){
+        cardView = new ImageView[numOfCrads];
 
+        int i;
+        for(i = 0; i < numOfCrads; i++){
+            cardView[i] = findViewById(cardsId[i]);
+            final ImageView card = cardView[i];
+            Animation fadeOut = new AlphaAnimation(1, 0);
+            fadeOut.setInterpolator(new AccelerateInterpolator());
+            fadeOut.setDuration(1000);
+
+            fadeOut.setAnimationListener(new Animation.AnimationListener()
+            {
+                public void onAnimationEnd(Animation animation)
+                {
+                    card.setVisibility(View.GONE);
+                }
+                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationStart(Animation animation) {}
+            });
+            card.startAnimation(fadeOut);
+        }
+        Drawable crying = getResources().getDrawable(R.drawable.crying_face);
+        findViewById(R.id.cardrow_container).setBackground(crying);
     }
+
+
 
 
     private void mainMenu() {

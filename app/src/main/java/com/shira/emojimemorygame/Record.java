@@ -49,4 +49,8 @@ public class Record implements Comparable<Record>{
         }
         return 0;
     }
+    @Override
+    public String toString() {
+        return this.playerName + " " + this.time + " " + this.address + ".\n";
+    }
 }
